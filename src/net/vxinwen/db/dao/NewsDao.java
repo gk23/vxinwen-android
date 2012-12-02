@@ -3,7 +3,6 @@ package net.vxinwen.db.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.vxinwen.bean.Category;
 import net.vxinwen.bean.News;
 import net.vxinwen.db.DBOpenHelper;
 import android.content.Context;
@@ -30,6 +29,11 @@ public class NewsDao {
 			} while (cursor.moveToNext());
 		}
 		return list;
+	}
+	
+	public boolean insert(Context context,List<News> newses){
+	    
+	    return false;
 	}
 		
 }
