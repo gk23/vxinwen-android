@@ -13,7 +13,7 @@ import android.database.sqlite.SQLiteDatabase;
 /**
  * 
  * 
- * @author Administrator
+ * @author gk23<aoaogk@gmail.com>
  *
  */
 public class CategoryDao {
@@ -25,8 +25,8 @@ public class CategoryDao {
 		List<Category> list = new ArrayList<Category>();
 		if (cursor.moveToFirst()) {
 			do {
-				long id = cursor.getLong(0);
-				String name = cursor.getString(1);
+				long id = cursor.getLong(cursor.getColumnIndex("id"));
+				String name = cursor.getString(cursor.getColumnIndex("name"));
 				Category cate = new Category();
 				cate.setId(id);
 				cate.setName(name);

@@ -6,9 +6,9 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 /**
- * Show one news summary.
+ * The page to show the summary of one news.
  * 
- * @author Administrator
+ * @author gk23<aoaogk@gmail.com>
  *
  */
 public class NewsSummaryActivity extends Activity {

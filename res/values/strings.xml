@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="hello">Hello World, VXinWenActivity!</string>
-	<string name="app_name">Vxinwen</string>
+	<string name="app_name">微新闻</string>
 	<string-array name="category_names">
-		<item>头条</item>
+		<item>要闻</item>
 		<item>体育</item>
 		<item>娱乐</item>
-		<item>音乐</item>
-		<item>电影</item>
+		<item>国内新闻</item>
+		<item>国外新闻</item>
 		<item>女人</item>
 		<item>时尚</item>
 		<item>游戏</item>
@@ -19,9 +19,9 @@
 		<string-array name="category_descs">
 		<item>国内外第一时间要闻</item>
 		<item>最新的足篮排体育咨询</item>
-		<item>哈哈，神马劲爆的新闻都有</item>
-		<item>往死里滚吧~~~</item>
-		<item>电影票真TM贵</item>
+		<item>哈哈，神马劲爆的八卦都有</item>
+		<item>国内实时要闻摘要</item>
+		<item>国外动向，实时归纳</item>
 		<item>还有露露，还有井</item>
 		<item>时尚，JB玩意</item>
 		<item>游戏，JB玩意</item>

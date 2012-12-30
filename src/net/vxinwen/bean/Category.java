@@ -4,11 +4,15 @@ package net.vxinwen.bean;
 public class Category {
 	private long id;
 	private String name;
+	private String desc;
 	private int unreadNewsCount;
-	/**
-	 * 
-	 */
 	private long lastNewsId;
+	public String getDesc() {
+        return desc;
+    }
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
 	
 	public long getLastNewsId() {
 		return lastNewsId;
