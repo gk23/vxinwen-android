@@ -27,8 +27,8 @@ public class NetHttpClient {
     private static void init() {
         client = new DefaultHttpClient();
         HttpParams params = client.getParams();
-        HttpConnectionParams.setConnectionTimeout(params, 3000);
-        HttpConnectionParams.setSoTimeout(params, 5000);
+        HttpConnectionParams.setConnectionTimeout(params, 10000);
+        HttpConnectionParams.setSoTimeout(params, 30000);
     }
 
     public static String getContent(String url) {

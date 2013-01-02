@@ -10,8 +10,17 @@ public class News {
 	private String content;
 	private String summary;
 	private Timestamp publishTime;
+	private String url;
 
-	public Timestamp getPublishTime() {
+	public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public Timestamp getPublishTime() {
         return publishTime;
     }
 

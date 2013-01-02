@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import net.vxinwen.R;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -32,7 +33,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     private static final String CREATE_CATEGORY_SQL = "CREATE TABLE IF NOT EXISTS category "
             + "(id integer primary key autoincrement, name nvarchar(30),description nvarchar(256))";
     private static final String CREATE_NEWS_SQL = "CREATE TABLE IF NOT EXISTS news "
-            + "(id integer primary key autoincrement, category_id integer, image_address varchar(128), title nvarchar(256), content text,summary nvarchar(281))";
+            + "(id integer primary key autoincrement, category_id integer, url varchar(256),image_address varchar(256), title nvarchar(256), content text,summary nvarchar(281))";
     private static final String INIT_CATEGORY_SQL_TEMPLATE = "INSERT INTO category (name,description) {values}";
     private static final String DROP_CATEGORY_SQL = "DROP TABLE IF EXISTS category";
     private static final String DROP_NEWS_SQL = "DROP TABLE IF EXISTS news";
@@ -69,5 +70,13 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             values.append(template.replace("{name}", cat_titles[i]).replace("{desc}", cat_descs[i]));
         }
         return INIT_CATEGORY_SQL_TEMPLATE.replace("{values}", values);
+    }
+    public static void close(Cursor cursor, SQLiteDatabase db){
+        if(cursor!=null){
+            cursor.close();
+        }
+        if(db!=null){
+            db.close();
+        }
     }
 }
