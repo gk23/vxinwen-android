@@ -1,5 +1,7 @@
 package net.vxinwen.db;
 
+import java.util.logging.Logger;
+
 import net.vxinwen.R;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -21,17 +23,17 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     private SQLiteDatabase db;
 
     private Context context;
-
+    private Logger logger = Logger.getLogger(this.getClass().getName());
     public DBOpenHelper(Context context) {
         super(context, DBNAME, null, VERSION);
         this.context = context;
     }
 
     private static final String CREATE_CATEGORY_SQL = "CREATE TABLE IF NOT EXISTS category "
-            + "(id integer primary key autoincrement, name varchar(30)";
+            + "(id integer primary key autoincrement, name nvarchar(30),description nvarchar(256))";
     private static final String CREATE_NEWS_SQL = "CREATE TABLE IF NOT EXISTS news "
-            + "(id integer primary key autoincrement, category_id bigint, image_address varchar(128), title nvarchar(256), content text,summary nvarchar(281)";
-    private static final String INIT_CATEGORY_SQL_TEMPLATE = "INSERT INTO catgory (name,desc) VALUES {values}";
+            + "(id integer primary key autoincrement, category_id integer, image_address varchar(128), title nvarchar(256), content text,summary nvarchar(281))";
+    private static final String INIT_CATEGORY_SQL_TEMPLATE = "INSERT INTO category (name,description) {values}";
     private static final String DROP_CATEGORY_SQL = "DROP TABLE IF EXISTS category";
     private static final String DROP_NEWS_SQL = "DROP TABLE IF EXISTS news";
 
@@ -39,7 +41,9 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_CATEGORY_SQL);
         db.execSQL(CREATE_NEWS_SQL);
-        db.execSQL(getInitCategorySql());
+        String initSql = getInitCategorySql();
+        logger.info("The init sql is ["+initSql+"]");
+        db.execSQL(initSql);
     }
 
 
@@ -50,14 +54,19 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    /**
+     * 拼接语句为
+     * insert into category (name,description) select '要闻','要闻' union all select  '体育','体育咨询' union all select 'test','test'…
+     * @return
+     */
     private String getInitCategorySql() {
         String[] cat_titles = this.context.getResources().getStringArray(R.array.category_names);
         String[] cat_descs = this.context.getResources().getStringArray(R.array.category_descs);
-        String template = "('{name}','{desc}')";
-        StringBuilder values = new StringBuilder(template.replace("{name}", cat_titles[0]).replace("{desc}",
-                cat_descs[0]));
+        String template = " UNION ALL SELECT '{name}','{desc}'";
+        String init = "SELECT '"+cat_titles[0]+"','"+cat_descs[0]+"'";
+        StringBuilder values = new StringBuilder(init);
         for (int i = 1; i < cat_titles.length; i++) {
-            values.append(",").append(template.replace("{name}", cat_titles[i]).replace("{desc}", cat_descs[i]));
+            values.append(template.replace("{name}", cat_titles[i]).replace("{desc}", cat_descs[i]));
         }
         return INIT_CATEGORY_SQL_TEMPLATE.replace("{values}", values);
     }

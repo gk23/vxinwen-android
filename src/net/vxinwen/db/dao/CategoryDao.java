@@ -9,6 +9,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 /**
  * 
@@ -23,13 +24,18 @@ public class CategoryDao {
 		SQLiteDatabase db = new DBOpenHelper(context).getReadableDatabase();
 		Cursor cursor = db.query(TABLE, null, null, null, null, null, null);
 		List<Category> list = new ArrayList<Category>();
+		Category cate;
 		if (cursor.moveToFirst()) {
 			do {
 				long id = cursor.getLong(cursor.getColumnIndex("id"));
 				String name = cursor.getString(cursor.getColumnIndex("name"));
-				Category cate = new Category();
+				String description  = cursor.getString(cursor.getColumnIndex("description"));
+				cate = new Category();
 				cate.setId(id);
 				cate.setName(name);
+				cate.setDesc(description);
+				list.add(cate);
+				Log.d(CategoryDao.class.getName(), name);
 
 			} while (cursor.moveToNext());
 		}

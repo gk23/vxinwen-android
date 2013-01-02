@@ -1,5 +1,7 @@
 package net.vxinwen.bean;
 
+import java.sql.Timestamp;
+
 public class News {
 	private long id;
 	private long categoryId;
@@ -7,8 +9,17 @@ public class News {
 	private String title;
 	private String content;
 	private String summary;
+	private Timestamp publishTime;
 
-	public long getId() {
+	public Timestamp getPublishTime() {
+        return publishTime;
+    }
+
+    public void setPublishTime(Timestamp publishTime) {
+        this.publishTime = publishTime;
+    }
+
+    public long getId() {
 		return id;
 	}
 	

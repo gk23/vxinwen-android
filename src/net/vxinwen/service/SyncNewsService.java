@@ -1,5 +1,6 @@
 package net.vxinwen.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.vxinwen.bean.News;
@@ -12,11 +13,15 @@ public class SyncNewsService {
         String idsString=lastId[0]+"",tagsString=category[0];
         for(int i=1;i<lastId.length;i++){
             idsString+="$$"+lastId[i];
-            tagsString+="$$"+category[i];                       
+            tagsString+="$$"+category[i];
         }
         url=url.replace("{ids}", idsString).replace("{tags}", tagsString);
-        String newses = NetHttpClient.getContent(url);
-        return null;
+        String newsesStr = NetHttpClient.getContent(url);
+        
+        // 解析JSON内容
+        List<News> newses = new ArrayList<News>(); 
+        
+        return newses;
     }
 
 }

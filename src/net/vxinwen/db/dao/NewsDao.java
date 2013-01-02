@@ -35,5 +35,22 @@ public class NewsDao {
 	    
 	    return false;
 	}
+	
+	/**
+	 * 获得
+	 * 
+	 * @param context
+	 * @param cateId
+	 * @return
+	 */
+	public long getLastNewsIdByCategory(Context context, long cateId){
+	    SQLiteDatabase db = new DBOpenHelper(context).getWritableDatabase();
+        Cursor cursor=db.rawQuery("select id from news where category_id=? order by id desc limit 1", new String[]{cateId+""});
+        long id =-1;
+        if(cursor.moveToFirst()){
+            id = cursor.getLong(cursor.getColumnIndex("id"));
+        }
+        return id;
+	}
 		
 }

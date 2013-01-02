@@ -8,9 +8,11 @@ import java.util.Map;
 import net.vxinwen.R;
 import net.vxinwen.bean.Category;
 import net.vxinwen.db.dao.CategoryDao;
+import net.vxinwen.db.dao.NewsDao;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -67,8 +69,9 @@ public class MainActivity extends ListActivity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Intent intent = new Intent(MainActivity.this, NewsSummaryActivity.class);
             Map<String, Object> item = data.get(position);
-
-            intent.putExtra("title", (String) item.get("title"));
+            // 传递
+            intent.putExtra("name", (String) item.get("name"));
+            intent.putExtra("lastNewsId", (Long)item.get("lastNewsId"));
             MainActivity.this.startActivity(intent);
         }
     };
@@ -87,7 +90,7 @@ public class MainActivity extends ListActivity {
         lv.setOnItemClickListener(onItemClick);
 
         List<Map<String, Object>> data = loadData();
-        String[] from = new String[] { "title", "desc", "img" };
+        String[] from = new String[] { "name", "description", "img" };
         int[] to = new int[] { R.id.cat_name, R.id.cat_desc, R.id.img };
         simpleAdapter = new SimpleAdapter(this, data, R.layout.list_item_handle_right, from, to);
         setListAdapter(simpleAdapter);
@@ -103,15 +106,18 @@ public class MainActivity extends ListActivity {
         // 从数据库中读取
         CategoryDao cateDao = new CategoryDao();
         List<Category> cates = cateDao.getAll(this);
+        Log.d(MainActivity.class.getName(), "cates size is: "+cates.size()+", the first cate is "+cates.get(0).getName());
         cat_titles = new String[cates.size()];
         cat_descs = new String[cates.size()];
         Map<String, Object> map;
         for (int i = 0; i < cates.size(); i++) {
             map = new HashMap<String, Object>();
-            map.put("title", cates.get(i).getName());
-            map.put("desc", cates.get(i).getDesc());
+            map.put("name", cates.get(i).getName());
+            map.put("description", cates.get(i).getDesc());
             // TODO 添加未读数背景，去掉此图片
             map.put("img", R.drawable.icon);
+            long lastNewsId = new NewsDao().getLastNewsIdByCategory(this,cates.get(i).getId());
+            map.put("lastNewsId", lastNewsId);
             data.add(map);
         }
         return data;
