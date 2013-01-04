@@ -30,7 +30,7 @@ public class SyncNewsService {
         String newsesStr = NetHttpClient.getContent(url);
         
         // 解析JSON内容
-        Map<String,List<News>> newses = jsonToNews(newsesStr);; 
+        Map<String,List<News>> newses = jsonToNews(newsesStr);
         return newses;
     }
     

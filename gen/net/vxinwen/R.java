@@ -178,6 +178,7 @@ containing a value of this type.
         public static final int drag=0x7f020006;
         public static final int icon=0x7f020007;
         public static final int splash=0x7f020008;
+        public static final int sync=0x7f020009;
     }
     public static final class id {
         public static final int cat_desc=0x7f05000b;
