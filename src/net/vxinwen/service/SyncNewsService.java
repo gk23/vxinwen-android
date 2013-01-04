@@ -18,7 +18,7 @@ import org.json.simple.JSONValue;
 
 public class SyncNewsService {
     // android虚拟机会认为localhost或127.0.0.1为自己，可以用 10.0.2.2或PC实际IP代替本PC电脑IP的localhost或127.0.0.1
-    private String url="http://192.168.1.105:8080/vnews/getNews?tags={tags}&ids={ids}";
+    private String url="http://192.168.90.241:8080/vnews/getNews?tags={tags}&ids={ids}";
     public Map<String,List<News>> getNews(long[] lastId,String[] category){
         // Get the json result of the service request.
         String idsString=lastId[0]+"",tagsString=category[0];

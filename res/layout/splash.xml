@@ -2,6 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
+	<!-- 
+	<ImageView 
+		android:id="@+id/splash_bg"
+		android:layout_width="60dip" 
+		android:layout_height="60dip"
+		android:src="@drawable/splash"
+		android:scaleType="centerInside"
+		android:layout_centerVertical="true"
+		 />
+		  -->
 	<ImageView android:id="@+id/splash_bg" android:background="@drawable/splash"
 		android:layout_width="fill_parent" android:layout_height="fill_parent" />
 </LinearLayout>

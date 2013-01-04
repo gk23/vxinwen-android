@@ -166,6 +166,7 @@ containing a value of this type.
     public static final class dimen {
         public static final int item_height=0x7f040000;
         public static final int section_div_height=0x7f040001;
+        public static final int titleTextSize=0x7f040002;
     }
     public static final class drawable {
         public static final int bg_title_1=0x7f020000;

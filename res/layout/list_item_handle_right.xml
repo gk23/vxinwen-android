@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:id="@+id/drag_handle"
   android:layout_width="fill_parent"
@@ -10,24 +10,28 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginLeft="10px"
-      android:layout_marginTop="25px">
+      android:layout_marginTop="25px"
+      android:layout_alignParentTop="true"
+	  android:layout_alignParentLeft="true">
     <TextView
 	    android:id="@+id/cat_name"
 	    android:textAppearance="?android:attr/textAppearanceMedium"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:textSize="14px"
+	    android:textSize="20dip"
+	    android:textStyle="bold"
 	    android:layout_weight="1" />
       <TextView android:id="@+id/cat_desc"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:textColor="#FFFFFFFF"
-          android:textSize="12px" />
+          android:textColor="#CCC"
+          android:textSize="12dip" />
   </LinearLayout>
   <ImageView android:id="@+id/img"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_alignRight="@id/drag_handle"
-      android:layout_centerVertical="true"
-      android:layout_margin="5px"/>
-</LinearLayout>
+      android:layout_margin="5px"
+      android:layout_alignParentTop="true"
+	  android:layout_alignParentRight="true"      
+      />
+</RelativeLayout>
