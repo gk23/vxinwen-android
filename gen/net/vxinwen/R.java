@@ -179,6 +179,7 @@ containing a value of this type.
         public static final int icon=0x7f020007;
         public static final int splash=0x7f020008;
         public static final int sync=0x7f020009;
+        public static final int sync_bg=0x7f02000a;
     }
     public static final class id {
         public static final int cat_desc=0x7f05000b;
@@ -189,7 +190,6 @@ containing a value of this type.
         public static final int drag_handle=0x7f050008;
         public static final int flingLeft=0x7f050002;
         public static final int flingRight=0x7f050001;
-        public static final int img=0x7f05000c;
         public static final int newsDetailLayout=0x7f05000d;
         public static final int newsSource=0x7f050010;
         public static final int newsSummary=0x7f050011;
@@ -200,6 +200,7 @@ containing a value of this type.
         public static final int slideLeft=0x7f050004;
         public static final int slideRight=0x7f050003;
         public static final int splash_bg=0x7f050012;
+        public static final int syncCount=0x7f05000c;
     }
     public static final class layout {
         public static final int left_in=0x7f030000;

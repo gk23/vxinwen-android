@@ -27,6 +27,15 @@
           android:textColor="#CCC"
           android:textSize="12dip" />
   </LinearLayout>
+  <TextView android:id="@+id/syncCount"
+  		android:background="@drawable/sync_bg"
+        android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="5dp"
+      android:layout_alignParentTop="true"
+	  android:layout_alignParentRight="true"   
+	  />
+  <!-- 
   <ImageView android:id="@+id/img"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -34,4 +43,5 @@
       android:layout_alignParentTop="true"
 	  android:layout_alignParentRight="true"      
       />
+       -->
 </RelativeLayout>
