@@ -2,6 +2,7 @@
 <resources>
 	<string name="hello">Hello World, VXinWenActivity!</string>
 	<string name="app_name">微新闻</string>
+	<string name="sync_msg">正在同步...</string>
 	<string-array name="category_names">
 		<item>要闻</item>
 		<item>体育</item>

@@ -1,4 +1,4 @@
-package net.vxinwen.common;
+package net.vxinwen.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,7 +15,7 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 
 
-public class NetHttpClient {
+public class HttpClientUtil {
     public static boolean interceptFlag = false;
 
     private static HttpClient client;

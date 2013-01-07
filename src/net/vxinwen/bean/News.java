@@ -4,13 +4,21 @@ import java.sql.Timestamp;
 
 public class News {
 	private long id;
-	private long categoryId;
+	private String category;
 	private String imageAddress;
 	private String title;
 	private String content;
 	private String summary;
 	private Timestamp publishTime;
 	private String url;
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
 
 	public String getUrl() {
         return url;
@@ -34,13 +42,6 @@ public class News {
 	
 	public void setId(long id) {
 		this.id = id;
-	}
-	public long getCategoryId() {
-		return categoryId;
-	}
-
-	public void setCategoryId(long categoryId) {
-		this.categoryId = categoryId;
 	}
 
 	public String getImageAddress() {

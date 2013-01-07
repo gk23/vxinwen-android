@@ -2,6 +2,7 @@ package net.vxinwen.activity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -35,15 +36,15 @@ public class MainActivity extends ListActivity {
 
 	private String[] cat_titles;
 	private String[] cat_descs;
-	private List<Map<String, Object>> data;
+	private List<Map<String, Object>> tags;
 
 	private DragSortListView.DropListener onDrop = new DragSortListView.DropListener() {
 		@Override
 		public void drop(int from, int to) {
 			Map<String, Object> item = (Map<String, Object>) simpleAdapter
 					.getItem(from);
-			data.remove(from);
-			data.add(to, item);
+			tags.remove(from);
+			tags.add(to, item);
 			simpleAdapter.notifyDataSetChanged();
 		}
 	};
@@ -51,7 +52,7 @@ public class MainActivity extends ListActivity {
 	private DragSortListView.RemoveListener onRemove = new DragSortListView.RemoveListener() {
 		@Override
 		public void remove(int which) {
-			data.remove(which);
+			tags.remove(which);
 			simpleAdapter.notifyDataSetChanged();
 		}
 	};
@@ -75,7 +76,7 @@ public class MainActivity extends ListActivity {
 				long id) {
 			Intent intent = new Intent(MainActivity.this,
 					NewsSummaryActivity.class);
-			Map<String, Object> item = data.get(position);
+			Map<String, Object> item = tags.get(position);
 			// 传递
 			intent.putExtra("name", (String) item.get("name"));
 			intent.putExtra("lastNewsId", (Long) item.get("lastNewsId"));
@@ -96,36 +97,24 @@ public class MainActivity extends ListActivity {
 		lv.setDragScrollProfile(ssProfile);
 		lv.setOnItemClickListener(onItemClick);
 
-		List<Map<String, Object>> data = loadTags();
+		// 从数据库中获得tags内容，赋值给tags变量
+		loadTags();
 		String[] from = new String[] { "name", "description", "syncCount" };
 		int[] to = new int[] { R.id.cat_name, R.id.cat_desc, R.id.syncCount };
 		// String[] from = new String[] { "name", "description"};
 		// int[] to = new int[] { R.id.cat_name, R.id.cat_desc};
-		simpleAdapter = new SimpleAdapter(this, data,
+		simpleAdapter = new SimpleAdapter(this, tags,
 				R.layout.list_item_handle_right, from, to);
-
-//		ViewBinder viewBinder = new ViewBinder() {
-//			@Override
-//			public boolean setViewValue(View view, Object data,
-//					String textRepresentation) {
-//				if (view instanceof GifView) {
-//					((GifView) view).setGifImage(R.drawable.sync);
-//				}
-//				return false;
-//			}
-//		};
 		setListAdapter(simpleAdapter);
-		int size = data.size();
+		int size = tags.size();
 		if (size > 0) {
-			String[] tagNames = new String[size];
-			long[] lastNewsIds = new long[size];
-			for (int i = 0; i < data.size(); i++) {
-				Map<String, Object> tag = data.get(i);
-				tagNames[i] = (String) tag.get("name");
-				lastNewsIds[i] = (Long) tag.get("lastNewsId");
+			for (int i = 0; i < tags.size(); i++) {
+				Map<String, Object> tag = tags.get(i);
+				// 每个tag需要单独同步，这样会有一个同步数量动态变化的效果
+				SyncNewsTask task = new SyncNewsTask(this, i);
+				task.execute((String) tag.get("name"),
+						(Long) tag.get("lastNewsId"));
 			}
-			SyncNewsTask task = new SyncNewsTask(this);
-			task.execute(tagNames, lastNewsIds);
 		}
 	}
 
@@ -135,7 +124,7 @@ public class MainActivity extends ListActivity {
 	 * @return Category的
 	 */
 	private List<Map<String, Object>> loadTags() {
-		data = new ArrayList<Map<String, Object>>();
+		tags = new ArrayList<Map<String, Object>>();
 		// 从数据库中读取
 		CategoryDao cateDao = new CategoryDao();
 		List<Category> cates = cateDao.getAll(this);
@@ -149,54 +138,73 @@ public class MainActivity extends ListActivity {
 			map = new HashMap<String, Object>();
 			map.put("name", cates.get(i).getName());
 			map.put("description", cates.get(i).getDesc());
-			// TODO 添加未读数背景，去掉此图片
-			map.put("syncCount", "?");
+			map.put("syncCount", getString(R.string.sync_msg));
 			long lastNewsId = new NewsDao().getLastNewsIdByCategory(this, cates
 					.get(i).getId());
 			map.put("lastNewsId", lastNewsId);
-			data.add(map);
+			tags.add(map);
 		}
-		return data;
+		return tags;
 	}
 
-	class SyncNewsTask extends AsyncTask<Object, Integer, int[]> {
+	class SyncNewsTask extends AsyncTask<Object, Integer, Integer> {
 		private Context context;
-		SyncNewsTask(Context context){
-			this.context = context;
-		}
+		private int position;
+
 		/**
-		 * 同步所有tags的数据
+		 * @param Context
+		 *            用于数据库操作时关联的context，默认为本activity
+		 * @param position
+		 *            当前tag在tags列表中的位置，用于动态更新对应的同步数据的数量
 		 * 
-		 * @return int[] 每个元素为某个tag同步的新闻数量
+		 * @param context
+		 * @param position
+		 */
+		SyncNewsTask(Context context, int position) {
+			this.context = context;
+			this.position = position;
+		}
+
+		/**
+		 * 同步指定tag的数据
+		 * 
+		 * @param params
+		 *            两个参数，第一个是tagName，第二个是lastNewsId
+		 * 
+		 * @return int 某个tag同步的新闻数量,没有更新或者更新失败会返回0
 		 */
 		@Override
-		protected int[] doInBackground(Object... params) {
-			Log.d(SyncNewsTask.class.getName(), "coming in method [doInBackground]");
-			String[] tagNames = (String[]) params[0];
-			long[] lastNewsIds = (long[]) params[1];
+		protected Integer doInBackground(Object... params) {
+			Log.d(SyncNewsTask.class.getName(),
+					"coming in method [doInBackground]");
+			String tagName = (String) params[0];
+			long lastNewsId = (Long) params[1];
 
 			SyncNewsService service = new SyncNewsService();
-			Map<String,List<News>> newses= service.getNews(lastNewsIds, tagNames);
+			Map<String, List<News>> newsMap = service.getNews(
+					new long[] { lastNewsId }, new String[] { tagName });
 			// 存入数据库
 			NewsDao newsDao = new NewsDao();
-			newsDao.insert(context, newses.get(""));
-			return null;
+			// 返回的只有一个tag对应的List<News>
+			List<News> newses = newsMap.get(tagName);
+			// 
+			if(newsDao.insertBatch(context, newses)){
+				return newses.size();
+			}else{
+				return 0;
+			}
 		}
 
-		protected void onPostExecute(int[] result) {
-			Log.d(SyncNewsTask.class.getName(), "coming in method [onPostExecute] with result which size is "+result.length);
-			if (result == null)
-				return;
+		protected void onPostExecute(Integer tagSyncCount) {
+			Log.d(SyncNewsTask.class.getName(),
+					"coming in method [onPostExecute] with result which size is "
+							+ tagSyncCount);
 			DragSortListView lv = (DragSortListView) getListView();
-			int count = lv.getCount();
-			
-			Log.d(SyncNewsTask.class.getName(), "the count is "+count);
-			if (count != result.length)
-				return;
-			for(int i=0;i<count;i++){
-				((HashMap)lv.getItemAtPosition(i)).put("syncCount",String.valueOf(result[i]));
-				Log.d(SyncNewsTask.class.getName(), "no."+i+" count is "+result[i]);
-			}
+
+			((HashMap) lv.getItemAtPosition(position)).put("syncCount",
+					String.valueOf(tagSyncCount));
+			Log.d(SyncNewsTask.class.getName(), "the sync count is "
+					+ tagSyncCount);
 			// 通知adapter有数据修改
 			simpleAdapter.notifyDataSetChanged();
 		}

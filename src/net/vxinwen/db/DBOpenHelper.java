@@ -33,7 +33,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     private static final String CREATE_CATEGORY_SQL = "CREATE TABLE IF NOT EXISTS category "
             + "(id integer primary key autoincrement, name nvarchar(30),description nvarchar(256))";
     private static final String CREATE_NEWS_SQL = "CREATE TABLE IF NOT EXISTS news "
-            + "(id integer primary key autoincrement, category_id integer, url varchar(256),image_address varchar(256), title nvarchar(256), content text,summary nvarchar(281))";
+            + "(id integer primary key autoincrement, category varchar(100), url varchar(256),image_address varchar(256), title nvarchar(256), content text,summary nvarchar(281)),publish_time timestamp";
     private static final String INIT_CATEGORY_SQL_TEMPLATE = "INSERT INTO category (name,description) {values}";
     private static final String DROP_CATEGORY_SQL = "DROP TABLE IF EXISTS category";
     private static final String DROP_NEWS_SQL = "DROP TABLE IF EXISTS news";
