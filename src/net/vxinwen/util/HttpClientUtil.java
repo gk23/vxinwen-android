@@ -14,7 +14,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 
-
 public class HttpClientUtil {
     public static boolean interceptFlag = false;
 
@@ -55,7 +54,7 @@ public class HttpClientUtil {
         get.setHeader("Connection", "Keep-Alive");
         get.setHeader("Charset", "UTF-8");
         get.setHeader("platform", "android");
-//        get.setHeader("version", Config.getVersionName());
+        // get.setHeader("version", Config.getVersionName());
     }
 
     @SuppressWarnings("finally")
@@ -89,7 +88,7 @@ public class HttpClientUtil {
             }
             value = value.replaceAll(" ", " ");
             value = value.trim();
-//            Logger.i("NetHttpClient 返回语句" + value);
+            // Logger.i("NetHttpClient 返回语句" + value);
             return value;
         }
 

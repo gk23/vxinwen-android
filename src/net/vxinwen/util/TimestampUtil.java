@@ -9,8 +9,8 @@ public class TimestampUtil {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         return sdf.format(ts);
     }
-    
-    public  static Timestamp stringToTimeStamp(String s) {
+
+    public static Timestamp stringToTimeStamp(String s) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         try {
             return new Timestamp(sdf.parse(s).getTime());

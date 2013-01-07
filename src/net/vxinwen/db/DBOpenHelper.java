@@ -11,9 +11,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * 不同的context，需要不同的SQLiteDatabase实例吗？如果不是，可以修改SQLiteDatabase成单例。
  * 
- * SQLiteDatabase只与context相关，SQLiteDatabase内部会check， 如果同一类context则会返回已有SQLiteDatabase实例。
+ * SQLiteDatabase只与context相关，SQLiteDatabase内部会check，
+ * 如果同一类context则会返回已有SQLiteDatabase实例。
  * 
- * 用法： 1. SQLiteDatabase db = new DBOpenHelper(context).getWritableDatabase(); 2. 用完需要close
+ * 用法： 1. SQLiteDatabase db = new DBOpenHelper(context).getWritableDatabase();
+ * 2. 用完需要close
  * 
  * @author gk23<aoaogk@gmail.com>
  * 
@@ -25,6 +27,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     private Context context;
     private Logger logger = Logger.getLogger(this.getClass().getName());
+
     public DBOpenHelper(Context context) {
         super(context, DBNAME, null, VERSION);
         this.context = context;
@@ -43,10 +46,9 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_CATEGORY_SQL);
         db.execSQL(CREATE_NEWS_SQL);
         String initSql = getInitCategorySql();
-        logger.info("The init sql is ["+initSql+"]");
+        logger.info("The init sql is [" + initSql + "]");
         db.execSQL(initSql);
     }
-
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -56,26 +58,28 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * 拼接语句为
-     * insert into category (name,description) select '要闻','要闻' union all select  '体育','体育咨询' union all select 'test','test'…
+     * 拼接语句为 insert into category (name,description) select '要闻','要闻' union all
+     * select '体育','体育咨询' union all select 'test','test'…
+     * 
      * @return
      */
     private String getInitCategorySql() {
         String[] cat_titles = this.context.getResources().getStringArray(R.array.category_names);
         String[] cat_descs = this.context.getResources().getStringArray(R.array.category_descs);
         String template = " UNION ALL SELECT '{name}','{desc}'";
-        String init = "SELECT '"+cat_titles[0]+"','"+cat_descs[0]+"'";
+        String init = "SELECT '" + cat_titles[0] + "','" + cat_descs[0] + "'";
         StringBuilder values = new StringBuilder(init);
         for (int i = 1; i < cat_titles.length; i++) {
             values.append(template.replace("{name}", cat_titles[i]).replace("{desc}", cat_descs[i]));
         }
         return INIT_CATEGORY_SQL_TEMPLATE.replace("{values}", values);
     }
-    public static void close(Cursor cursor, SQLiteDatabase db){
-        if(cursor!=null){
+
+    public static void close(Cursor cursor, SQLiteDatabase db) {
+        if (cursor != null) {
             cursor.close();
         }
-        if(db!=null){
+        if (db != null) {
             db.close();
         }
     }

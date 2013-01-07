@@ -3,24 +3,24 @@ package net.vxinwen.bean;
 import java.sql.Timestamp;
 
 public class News {
-	private long id;
-	private String category;
-	private String imageAddress;
-	private String title;
-	private String content;
-	private String summary;
-	private Timestamp publishTime;
-	private String url;
+    private long id;
+    private String category;
+    private String imageAddress;
+    private String title;
+    private String content;
+    private String summary;
+    private Timestamp publishTime;
+    private String url;
 
-	public String getCategory() {
-		return category;
-	}
+    public String getCategory() {
+        return category;
+    }
 
-	public void setCategory(String category) {
-		this.category = category;
-	}
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
-	public String getUrl() {
+    public String getUrl() {
         return url;
     }
 
@@ -37,42 +37,42 @@ public class News {
     }
 
     public long getId() {
-		return id;
-	}
-	
-	public void setId(long id) {
-		this.id = id;
-	}
+        return id;
+    }
 
-	public String getImageAddress() {
-		return imageAddress;
-	}
+    public void setId(long id) {
+        this.id = id;
+    }
 
-	public void setImageAddress(String imageAddress) {
-		this.imageAddress = imageAddress;
-	}
+    public String getImageAddress() {
+        return imageAddress;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public void setImageAddress(String imageAddress) {
+        this.imageAddress = imageAddress;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public String getSummary() {
-		return summary;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public void setSummary(String summary) {
-		this.summary = summary;
-	}
+    public String getSummary() {
+        return summary;
+    }
 
-	public String getContent() {
-		return content;
-	}
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
 
-	public void setContent(String content) {
-		this.content = content;
-	}
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 }
