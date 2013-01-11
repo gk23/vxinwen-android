@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout android:id="@+id/newsDetailLayout"
 	android:layout_width="fill_parent" android:layout_height="fill_parent"
-	android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android">
+	android:orientation="vertical" 
+    android:background="#FFFFFF"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 	<TextView android:id="@+id/newsTitle" 
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:textSize="24dip"
+		android:textSize="24sp"
 		android:textColor="#FFFFFF"
 		android:textStyle="bold"
 		android:gravity="left|bottom"
-		android:padding="3dip">
+		android:paddingBottom="5dp">
 	</TextView>
 	<LinearLayout android:id="@+id/contentLayout"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"
 		android:orientation="vertical">
 		<TextView android:id="@+id/newsSource" android:layout_width="fill_parent"
-			android:layout_height="wrap_content" android:text="TextView">
+			android:layout_height="wrap_content" 
+            android:padding="3dp"
+            android:text="TextView" android:textSize="14sp" android:textColor="#808080">
 			
 		</TextView>
 		<TextView android:id="@+id/newsSummary" android:layout_width="fill_parent"
-			android:layout_height="wrap_content" android:text="TextView">
+			android:layout_height="wrap_content" android:text="TextView" android:textSize="18sp" android:textColor="#000000">
 		</TextView>
 	</LinearLayout>
 </LinearLayout>

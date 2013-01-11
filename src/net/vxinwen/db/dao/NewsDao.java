@@ -16,19 +16,32 @@ import android.util.Log;
 public class NewsDao {
     private final static String TABLE = "news";
     /**
+     * 每次返回新闻摘要的条数
+     */
+    private static String MAX_RESULT_COUNT="30"; 
+    /**
      * 待插入的字段和顺序，顺序如果修改，则toNewsArray方法也需要相应修改
      */
-    private final static String[] COLUMNS_INSERTED = new String[] { "title", "summary",
-            "image_address", "url", "publish_time", "category" };
+    private final static String[] COLUMNS_INSERTED = new String[] {"id","title", "summary",
+            "image_address", "url", "publish_time", "category"};
     private final static int COLUMN_INSERTED_COUNT = COLUMNS_INSERTED.length;
-
+    
+    /**
+     * 
+     * 
+     * @param context
+     * @param category
+     * @return 可能为null或size为0
+     */
     public List<News> getByCategory(Context context, String category) {
         SQLiteDatabase db = null;
         Cursor cursor = null;
         try {
             db = new DBOpenHelper(context).getWritableDatabase();
-            cursor = db.query(TABLE, null, "category=?", new String[] { category }, null, null,
-                    null);
+            String sql = "select * from news where category=? order by publish_time desc limit "+MAX_RESULT_COUNT;
+            cursor = db.rawQuery(sql, new String[] { category });
+//            cursor = db.query(TABLE, null, "category=?", new String[] { category }, null, null,
+//                    "publish_time desc",MAX_RESULT_COUNT);
             List<News> list = new ArrayList<News>();
             News news = null;
             if (cursor.moveToFirst()) {
@@ -63,15 +76,22 @@ public class NewsDao {
      * @return
      */
     public boolean insertBatch(Context context, List<News> newses) {
+        if (newses == null || newses.size() == 0)
+            return false;
+        Log.d(NewsDao.class.getName(), "Coming in method insertBatch. Category is "
+                + newses.get(0).getCategory());
         // 实现插入，有多线程插入News的现象
         SQLiteDatabase db = null;
         Cursor cursor = null;
         try {
-            db.beginTransaction();
             db = new DBOpenHelper(context).getWritableDatabase();
+            db.beginTransaction();
             String sql = getInsertBatchSql(TABLE, COLUMNS_INSERTED, toNewsArray(newses));
             db.execSQL(sql);
+            db.setTransactionSuccessful(); 
             db.endTransaction();
+            Log.d(NewsDao.class.getName(), "insertBatch. Category is "
+                    + newses.get(0).getCategory());
             return true;
         } catch (SQLException e) {
             Log.e(NewsDao.class.getName(), e.getMessage());
@@ -87,21 +107,22 @@ public class NewsDao {
      * @param newses
      * @return
      */
-    private String[][] toNewsArray(List<News> newses) {
+    private Object[][] toNewsArray(List<News> newses) {
         int size = 0;
         if (newses == null || (size = newses.size()) == 0)
             return null;
-        String[][] newsArray = new String[size][];
+        Object[][] newsArray = new Object[size][];
         News news = null;
         for (int i = 0; i < size; i++) {
-            newsArray[i] = new String[COLUMN_INSERTED_COUNT];
+            newsArray[i] = new Object[COLUMN_INSERTED_COUNT];
             news = newses.get(i);
-            newsArray[i][0] = news.getTitle();
-            newsArray[i][1] = news.getSummary();
-            newsArray[i][2] = news.getImageAddress();
-            newsArray[i][3] = news.getUrl();
-            newsArray[i][4] = TimestampUtil.timeStampToString(news.getPublishTime());
-            newsArray[i][5] = news.getCategory();
+            newsArray[i][0] = (Long)news.getId();
+            newsArray[i][1] = news.getTitle();
+            newsArray[i][2] = news.getSummary();
+            newsArray[i][3] = news.getImageAddress();
+            newsArray[i][4] = news.getUrl();
+            newsArray[i][5] = TimestampUtil.timeStampToString(news.getPublishTime());
+            newsArray[i][6] = news.getCategory();
         }
         return newsArray;
     }
@@ -120,7 +141,7 @@ public class NewsDao {
      *            '要闻','要闻'),values[1]=('体育','体育咨询')...
      * @return 拼接好的sql语句。
      */
-    private String getInsertBatchSql(String tableName, String[] columns, String[][] values) {
+    private String getInsertBatchSql(String tableName, String[] columns, Object[][] values) {
         if (tableName == null || tableName.trim().length() == 0)
             return null;
         if (columns.length == 0)
@@ -144,30 +165,16 @@ public class NewsDao {
         // 替换VALUES字段
         StringBuilder valuePart = new StringBuilder();
         for (int i = 0; i < values.length; i++) {
-            valuePart.append(" UNION ALL SELECT '").append(values[i][0]).append("'");
+            //  每条数据第一个是id的值，是整数，不用单引号，其他都为字符串
+            valuePart.append(" UNION ALL SELECT ").append(values[i][0]);
             for (int j = 1; j < columns.length; j++) {
                 valuePart.append(",'").append(values[i][j]).append("'");
             }
         }
         String valueString = valuePart.toString().replaceFirst("UNION ALL", "");
-        res.replace("{values}", valueString);
-        // // 替换column字段
-        // String cols = columns[0];
-        // for (int i = 1; i < columns.length; i++) {
-        // cols += "," + columns[i];
-        // }
-        // res = res.replace("{columns}", cols);
-        //
-        // // 替换values
-        // String initVals = "SELECT '"+values[0][0];
-        //
-        // for(int i=1;i<columns.length;i++){
-        // initVals+=values[0][i];
-        // }
-        //
-        // String template = " UNION ALL SELECT '{name}','{desc}'";
-        // String init = "SELECT '"+cat_titles[0]+"','"+cat_descs[0]+"'";
-        return null;
+        res = res.replace("{values}", valueString);
+        Log.d(NewsDao.class.getName(), "the insert sql is [ " + res + " ]");
+        return res;
     }
 
     /**
@@ -177,14 +184,13 @@ public class NewsDao {
      * @param cateId
      * @return
      */
-    public long getLastNewsIdByCategory(Context context, long cateId) {
+    public long getLastNewsIdByCategory(Context context, String cate) {
         SQLiteDatabase db = null;
         Cursor cursor = null;
         try {
             db = new DBOpenHelper(context).getWritableDatabase();
-            cursor = db.rawQuery(
-                    "select id from news where category_id=? order by id desc limit 1",
-                    new String[] { cateId + "" });
+            cursor = db.rawQuery("select id from news where category=? order by id desc limit 1",
+                    new String[] { cate });
             long id = -1;
             if (cursor.moveToFirst()) {
                 id = cursor.getLong(cursor.getColumnIndex("id"));

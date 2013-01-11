@@ -213,9 +213,14 @@ containing a value of this type.
         public static final int splash=0x7f030007;
     }
     public static final class string {
-        public static final int app_name=0x7f060001;
-        public static final int hello=0x7f060000;
-        public static final int sync_msg=0x7f060002;
+        public static final int app_name=0x7f060002;
+        /**  数据库版本号，为正整数，每次发布前如果数据结构有更新则将此值加1，系统会调用onUpgrade方法 
+         */
+        public static final int sql_version=0x7f060001;
+        public static final int sync_msg=0x7f060003;
+        /**  程序的版本号 
+         */
+        public static final int version=0x7f060000;
     }
     public static final class styleable {
         /** Attributes that can be used with a DragSortListView.

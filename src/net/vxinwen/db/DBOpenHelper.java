@@ -5,8 +5,10 @@ import java.util.logging.Logger;
 import net.vxinwen.R;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 /**
  * 不同的context，需要不同的SQLiteDatabase实例吗？如果不是，可以修改SQLiteDatabase成单例。
@@ -22,39 +24,55 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class DBOpenHelper extends SQLiteOpenHelper {
     private static final String DBNAME = "vxinwen.db";
-    private static final int VERSION = 1;
-    private SQLiteDatabase db;
+    private static int VERSION = 0;
 
     private Context context;
-    private Logger logger = Logger.getLogger(this.getClass().getName());
-
-    public DBOpenHelper(Context context) {
-        super(context, DBNAME, null, VERSION);
-        this.context = context;
-    }
 
     private static final String CREATE_CATEGORY_SQL = "CREATE TABLE IF NOT EXISTS category "
             + "(id integer primary key autoincrement, name nvarchar(30),description nvarchar(256))";
     private static final String CREATE_NEWS_SQL = "CREATE TABLE IF NOT EXISTS news "
-            + "(id integer primary key autoincrement, category varchar(100), url varchar(256),image_address varchar(256), title nvarchar(256), content text,summary nvarchar(281)),publish_time timestamp";
+            + "(id integer primary key autoincrement, category varchar(100), url varchar(256),image_address varchar(256), title nvarchar(256), content text,summary nvarchar(281),publish_time timestamp)";
     private static final String INIT_CATEGORY_SQL_TEMPLATE = "INSERT INTO category (name,description) {values}";
     private static final String DROP_CATEGORY_SQL = "DROP TABLE IF EXISTS category";
     private static final String DROP_NEWS_SQL = "DROP TABLE IF EXISTS news";
 
+    public DBOpenHelper(Context context) {
+        super(context, DBNAME, null, getVersion(context));
+        this.context = context;
+    }
+
+    private static int getVersion(Context context) {
+        int ver = Integer.parseInt(context.getResources().getString(R.string.sql_version));
+        VERSION = ver;
+        return ver;
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_CATEGORY_SQL);
-        db.execSQL(CREATE_NEWS_SQL);
         String initSql = getInitCategorySql();
-        logger.info("The init sql is [" + initSql + "]");
-        db.execSQL(initSql);
+        Log.d(this.getClass().getName(), "In onCreate method, The init sql is [" + initSql + "]");
+        try {
+            db.execSQL(CREATE_CATEGORY_SQL);
+            db.execSQL(CREATE_NEWS_SQL);
+            db.execSQL(initSql);
+        } catch (SQLException e) {
+            Log.d(this.getClass().getName(), e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(DROP_CATEGORY_SQL);
-        db.execSQL(DROP_NEWS_SQL);
-        onCreate(db);
+        Log.d(this.getClass().getName(), "Comming in onupgrade method, the drop sql is ["
+                + DROP_CATEGORY_SQL + "]");
+        try {
+            db.execSQL(DROP_CATEGORY_SQL);
+            db.execSQL(DROP_NEWS_SQL);
+            onCreate(db);
+        } catch (SQLException e) {
+            Log.d(this.getClass().getName(), e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     /**

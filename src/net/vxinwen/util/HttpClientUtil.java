@@ -26,8 +26,8 @@ public class HttpClientUtil {
     private static void init() {
         client = new DefaultHttpClient();
         HttpParams params = client.getParams();
-        HttpConnectionParams.setConnectionTimeout(params, 10000);
-        HttpConnectionParams.setSoTimeout(params, 30000);
+        HttpConnectionParams.setConnectionTimeout(params, 100000);
+        HttpConnectionParams.setSoTimeout(params, 300000);
     }
 
     public static String getContent(String url) {

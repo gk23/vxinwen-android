@@ -38,6 +38,7 @@ public class JsonUtil {
                     news.setImageAddress(newsJson.get("imageAddress").toString());
                     news.setSummary(newsJson.get("summary").toString());
                     news.setUrl(newsJson.get("url").toString());
+                    news.setCategory(newsJson.get("category").toString());
                     newsList.add(news);
                 }
                 newses.put(category, newsList);

@@ -2,7 +2,6 @@ package net.vxinwen.activity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -75,8 +74,7 @@ public class MainActivity extends ListActivity {
             Intent intent = new Intent(MainActivity.this, NewsSummaryActivity.class);
             Map<String, Object> item = tags.get(position);
             // 传递
-            intent.putExtra("name", (String) item.get("name"));
-            intent.putExtra("lastNewsId", (Long) item.get("lastNewsId"));
+            intent.putExtra("category", (String) item.get("name"));
             MainActivity.this.startActivity(intent);
         }
     };
@@ -114,7 +112,7 @@ public class MainActivity extends ListActivity {
     }
 
     /**
-     * 加载用户的tag列表数据
+     * 加载用户的tag列表数据,同时查出当前每个类别的news的最大ID，用于列表同步用。
      * 
      * @return Category的
      */
@@ -134,7 +132,7 @@ public class MainActivity extends ListActivity {
             map.put("name", cates.get(i).getName());
             map.put("description", cates.get(i).getDesc());
             map.put("syncCount", getString(R.string.sync_msg));
-            long lastNewsId = new NewsDao().getLastNewsIdByCategory(this, cates.get(i).getId());
+            long lastNewsId = new NewsDao().getLastNewsIdByCategory(this, cates.get(i).getName());
             map.put("lastNewsId", lastNewsId);
             tags.add(map);
         }
@@ -169,10 +167,10 @@ public class MainActivity extends ListActivity {
          */
         @Override
         protected Integer doInBackground(Object... params) {
-            Log.d(SyncNewsTask.class.getName(), "coming in method [doInBackground]");
             String tagName = (String) params[0];
             long lastNewsId = (Long) params[1];
-
+            Log.d(SyncNewsTask.class.getName(), "["+tagName+"] Coming in method [doInBackground], the lastId is ["+lastNewsId+"]");
+            long s  = System.currentTimeMillis();
             SyncNewsService service = new SyncNewsService();
             Map<String, List<News>> newsMap = service.getNews(new long[] { lastNewsId },
                     new String[] { tagName });
@@ -180,8 +178,13 @@ public class MainActivity extends ListActivity {
             NewsDao newsDao = new NewsDao();
             // 返回的只有一个tag对应的List<News>
             List<News> newses = newsMap.get(tagName);
-            //
-            if (newsDao.insertBatch(context, newses)) {
+            long e = System.currentTimeMillis();
+            Log.d(SyncNewsTask.class.getName(), "["+tagName+"] Fetching news from server costs "+(e-s)+"ms, newses size is "+newses.size());
+            s  = System.currentTimeMillis();
+            boolean isInserted = newsDao.insertBatch(context, newses);
+            e = System.currentTimeMillis();
+            Log.d(SyncNewsTask.class.getName(), "["+tagName+"] Inserting news into DB costs "+(e-s)+"ms, isInserted is "+isInserted);
+            if (isInserted) {
                 return newses.size();
             } else {
                 return 0;
