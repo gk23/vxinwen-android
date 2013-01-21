@@ -179,7 +179,7 @@ public class MainActivity extends ListActivity {
             // 返回的只有一个tag对应的List<News>
             List<News> newses = newsMap.get(tagName);
             long e = System.currentTimeMillis();
-            Log.d(SyncNewsTask.class.getName(), "["+tagName+"] Fetching news from server costs "+(e-s)+"ms, newses size is "+newses.size());
+            Log.d(SyncNewsTask.class.getName(), "["+tagName+"] Fetching news from server costs "+(e-s)+"ms, newses size is "+(newses==null?0:newses.size()));
             s  = System.currentTimeMillis();
             boolean isInserted = newsDao.insertBatch(context, newses);
             e = System.currentTimeMillis();
