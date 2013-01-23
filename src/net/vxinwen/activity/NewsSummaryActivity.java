@@ -2,6 +2,7 @@ package net.vxinwen.activity;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Random;
 
 import net.vxinwen.R;
 import net.vxinwen.bean.News;
@@ -60,7 +61,7 @@ public class NewsSummaryActivity extends Activity implements OnGestureListener {
         // set title
         TextView newsTitle = (TextView) layout.findViewById(R.id.newsTitle);
         Log.d(this.getLocalClassName(), "newsTitle is [" + newsTitle + "]");
-        Drawable bg = getResources().getDrawable(R.drawable.bg_title_1);
+        Drawable bg = getResources().getDrawable(getRandomBackGround());
         Log.d(this.getLocalClassName(), "theopacity of bg picture is [" + bg.getOpacity() + "]");
         newsTitle.setBackgroundDrawable(bg);
         newsTitle.setText(news.getTitle());
@@ -78,6 +79,11 @@ public class NewsSummaryActivity extends Activity implements OnGestureListener {
         return layout;
     }
 
+    private int getRandomBackGround(){
+        int[] bgs  = new int[]{R.drawable.bg_title_x_6,R.drawable.bg_title_x_7,R.drawable.bg_title_x_8};
+        int index = (int)(Math.random()*bgs.length);
+        return bgs[index];
+    }
     /**
      * 获得当前类别最新的news列表
      * 

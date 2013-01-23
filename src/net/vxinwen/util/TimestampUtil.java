@@ -3,6 +3,7 @@ package net.vxinwen.util;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Random;
 
 public class TimestampUtil {
     public static String timeStampToString(Timestamp ts) {
@@ -19,4 +20,6 @@ public class TimestampUtil {
             return null;
         }
     }
+    
+
 }
