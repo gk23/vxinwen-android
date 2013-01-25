@@ -12,6 +12,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
+import android.util.Log;
+
 public class JsonUtil {
 
     /**
@@ -30,14 +32,18 @@ public class JsonUtil {
                 for (int i = 0; i < newsArray.size(); i++) {
                     JSONObject newsJson = (JSONObject) newsArray.get(i);
                     News news = new News();
+                    Log.d(JsonUtil.class.getName(), "the news json is "+newsJson.toJSONString());
                     news.setId((Long) newsJson.get("id"));
-                    news.setTitle(newsJson.get("title").toString());
+                    Object title = newsJson.get("title");
+                    news.setTitle(title==null?null:title.toString());
                     // TODO 如果支持自定义tag功能，那category和news是多对多关系，则setCategoryId不正确
                     news.setPublishTime(TimestampUtil.stringToTimeStamp(newsJson.get("publishTime")
                             .toString()));
-                    news.setImageAddress(newsJson.get("imageAddress").toString());
+                    Object imageAddress = newsJson.get("imageAddress");
+                    news.setImageAddress(imageAddress==null?null:imageAddress.toString());
                     news.setSummary(newsJson.get("summary").toString());
-                    news.setUrl(newsJson.get("url").toString());
+                    Object url = newsJson.get("url");
+                    news.setUrl(url==null?null:url.toString());
                     news.setCategory(newsJson.get("category").toString());
                     newsList.add(news);
                 }

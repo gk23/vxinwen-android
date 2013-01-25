@@ -2,7 +2,7 @@
 <com.mobeta.android.dslv.DragSortListView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dslv="http://schemas.android.com/apk/res/net.vxinwen"
-    android:id="@android:id/list"
+    android:id="@+android:id/list"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:paddingTop="0dp"
@@ -10,6 +10,7 @@
     android:paddingLeft="10dp"
     android:layout_margin="10dp"
     android:dividerHeight="15dp"
+    android:scrollbars="none"
     dslv:drag_enabled="true"
     dslv:collapsed_height="10dp"
     dslv:drag_scroll_start="0.33"

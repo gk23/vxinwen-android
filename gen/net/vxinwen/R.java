@@ -169,17 +169,24 @@ containing a value of this type.
         public static final int titleTextSize=0x7f040002;
     }
     public static final class drawable {
-        public static final int bg_title_6=0x7f020000;
-        public static final int bg_title_7=0x7f020001;
-        public static final int bg_title_8=0x7f020002;
-        public static final int bg_title_x_6=0x7f020003;
-        public static final int bg_title_x_7=0x7f020004;
-        public static final int bg_title_x_8=0x7f020005;
-        public static final int drag=0x7f020006;
-        public static final int icon=0x7f020007;
-        public static final int splash=0x7f020008;
-        public static final int sync=0x7f020009;
-        public static final int sync_bg=0x7f02000a;
+        public static final int bg_list=0x7f020000;
+        public static final int bg_list_1=0x7f020001;
+        public static final int bg_list_x_1=0x7f020002;
+        public static final int bg_title=0x7f020003;
+        public static final int bg_title_6=0x7f020004;
+        public static final int bg_title_7=0x7f020005;
+        public static final int bg_title_8=0x7f020006;
+        public static final int bg_title_x_6=0x7f020007;
+        public static final int bg_title_x_7=0x7f020008;
+        public static final int bg_title_x_8=0x7f020009;
+        public static final int drag=0x7f02000a;
+        public static final int icon=0x7f02000b;
+        public static final int splash=0x7f02000c;
+        public static final int sync=0x7f02000d;
+        public static final int sync_bg=0x7f02000e;
+        public static final int sync_bg_1=0x7f02000f;
+        public static final int sync_bg_2=0x7f020010;
+        public static final int sync_bg_3=0x7f020011;
     }
     public static final class id {
         public static final int cat_desc=0x7f05000b;
@@ -203,10 +210,10 @@ containing a value of this type.
         public static final int syncCount=0x7f05000c;
     }
     public static final class layout {
-        public static final int left_in=0x7f030000;
-        public static final int left_out=0x7f030001;
-        public static final int list_item_handle_right=0x7f030002;
-        public static final int main=0x7f030003;
+        public static final int category_list=0x7f030000;
+        public static final int category_list_item=0x7f030001;
+        public static final int left_in=0x7f030002;
+        public static final int left_out=0x7f030003;
         public static final int news_summary=0x7f030004;
         public static final int right_in=0x7f030005;
         public static final int right_out=0x7f030006;

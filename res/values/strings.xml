@@ -8,31 +8,19 @@
     <string name="app_name">微新闻</string>
     <string name="sync_msg">正在同步...</string>
     <string-array name="category_names">
-        <item>要闻</item>
-        <item>体育</item>
+        <item>头条</item>
         <item>娱乐</item>
-        <item>国内新闻</item>
-        <item>国外新闻</item>
-        <item>女人</item>
-        <item>时尚</item>
-        <item>游戏</item>
+        <item>体育</item>
         <item>科技</item>
-        <item>房产</item>
         <item>财经</item>
         <item>添加</item>
     </string-array>
     <string-array name="category_descs">
-        <item>国内外第一时间要闻</item>
-        <item>最新的足篮排体育咨询</item>
-        <item>哈哈，神马劲爆的八卦都有</item>
-        <item>国内实时要闻摘要</item>
-        <item>国外动向，实时归纳</item>
-        <item>还有露露，还有井</item>
-        <item>时尚，JB玩意</item>
-        <item>游戏，JB玩意</item>
-        <item>科技，JB玩意</item>
-        <item>房产，JB玩意</item>
-        <item>财经，JB玩意</item>
+        <item>每日第一时间重要新闻</item>
+        <item>最新的明星绯闻八卦资讯</item>
+        <item>最快速最全面最专业的体育新闻</item>
+        <item>IT业界的及时资讯报道</item>
+        <item>专业的全球财经热点新闻及评论</item>
         <item>添加</item>
     </string-array>
 </resources>

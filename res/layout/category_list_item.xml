@@ -5,12 +5,12 @@
   android:layout_width="fill_parent"
   android:layout_height="@dimen/item_height"
   android:orientation="horizontal"
-  android:background="@drawable/drag">
+  android:background="@drawable/bg_list_x_1">
   <LinearLayout android:orientation="vertical"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginLeft="10px"
-      android:layout_marginTop="25px"
+      android:layout_marginLeft="10dp"
+      android:layout_marginTop="20dp"
       android:layout_alignParentTop="true"
 	  android:layout_alignParentLeft="true">
     <TextView
@@ -18,22 +18,24 @@
 	    android:textAppearance="?android:attr/textAppearanceMedium"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:textSize="20dip"
+	    android:textSize="20sp"
 	    android:textStyle="bold"
 	    android:layout_weight="1" />
       <TextView android:id="@+id/cat_desc"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:textColor="#CCC"
-          android:textSize="12dip" />
+          android:textColor="#fff"
+          android:textSize="12sp" />
   </LinearLayout>
   <TextView android:id="@+id/syncCount"
-  		android:background="@drawable/sync_bg"
+  		android:background="@drawable/sync_bg_2"
         android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_margin="5dp"
-      android:layout_alignParentTop="true"
-	  android:layout_alignParentRight="true"   
+      android:layout_centerVertical="true"
+	  android:layout_alignParentRight="true" 
+      android:gravity="center"
+      android:textColor="#fff"  
 	  />
   <!-- 
   <ImageView android:id="@+id/img"

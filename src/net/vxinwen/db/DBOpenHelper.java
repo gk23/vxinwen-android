@@ -24,7 +24,7 @@ import android.util.Log;
  */
 public class DBOpenHelper extends SQLiteOpenHelper {
     private static final String DBNAME = "vxinwen.db";
-    private static int VERSION = 0;
+    private static int VERSION = 1;
 
     private Context context;
 

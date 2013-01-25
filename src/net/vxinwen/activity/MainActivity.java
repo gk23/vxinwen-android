@@ -83,7 +83,7 @@ public class MainActivity extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.category_list);
 
         DragSortListView lv = (DragSortListView) getListView();
 
@@ -98,7 +98,7 @@ public class MainActivity extends ListActivity {
         int[] to = new int[] { R.id.cat_name, R.id.cat_desc, R.id.syncCount };
         // String[] from = new String[] { "name", "description"};
         // int[] to = new int[] { R.id.cat_name, R.id.cat_desc};
-        simpleAdapter = new SimpleAdapter(this, tags, R.layout.list_item_handle_right, from, to);
+        simpleAdapter = new SimpleAdapter(this, tags, R.layout.category_list_item, from, to);
         setListAdapter(simpleAdapter);
         int size = tags.size();
         if (size > 0) {

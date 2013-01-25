@@ -1,15 +1,17 @@
 package net.vxinwen.activity;
 
-import java.sql.Timestamp;
 import java.util.List;
-import java.util.Random;
 
 import net.vxinwen.R;
 import net.vxinwen.bean.News;
 import net.vxinwen.db.dao.NewsDao;
 import net.vxinwen.service.SyncNewsService;
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Shader.TileMode;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -62,6 +64,7 @@ public class NewsSummaryActivity extends Activity implements OnGestureListener {
         TextView newsTitle = (TextView) layout.findViewById(R.id.newsTitle);
         Log.d(this.getLocalClassName(), "newsTitle is [" + newsTitle + "]");
         Drawable bg = getResources().getDrawable(getRandomBackGround());
+        
         Log.d(this.getLocalClassName(), "theopacity of bg picture is [" + bg.getOpacity() + "]");
         newsTitle.setBackgroundDrawable(bg);
         newsTitle.setText(news.getTitle());
