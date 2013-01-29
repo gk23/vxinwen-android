@@ -17,9 +17,11 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.LinearLayout;
 import android.widget.SimpleAdapter;
 
 import com.mobeta.android.dslv.DragSortListView;
@@ -71,10 +73,19 @@ public class MainActivity extends ListActivity {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            Intent intent = new Intent(MainActivity.this, NewsSummaryActivity.class);
-            Map<String, Object> item = tags.get(position);
-            // 传递
-            intent.putExtra("category", (String) item.get("name"));
+            Intent intent = null;
+            // 表示点击了添加按钮
+            if(position>=tags.size()){
+                intent = new Intent(MainActivity.this, AddTagActivity.class);
+            }else{
+                intent = new Intent(MainActivity.this, NewsSummaryActivity.class);
+                Map<String, Object> item = tags.get(position);
+                String name = (String)item.get("name");
+                
+                // 传递
+                intent.putExtra("category", (String) item.get("name"));
+                
+            }
             MainActivity.this.startActivity(intent);
         }
     };
@@ -92,14 +103,22 @@ public class MainActivity extends ListActivity {
         lv.setDragScrollProfile(ssProfile);
         lv.setOnItemClickListener(onItemClick);
 
+        LayoutInflater inflater = this.getLayoutInflater();
+        LinearLayout v = (LinearLayout)inflater.inflate(R.layout.add_button, null);
+        lv.addFooterView(v,null,true);
         // 从数据库中获得tags内容，赋值给tags变量
         loadTags();
         String[] from = new String[] { "name", "description", "syncCount" };
         int[] to = new int[] { R.id.cat_name, R.id.cat_desc, R.id.syncCount };
         // String[] from = new String[] { "name", "description"};
         // int[] to = new int[] { R.id.cat_name, R.id.cat_desc};
+        
         simpleAdapter = new SimpleAdapter(this, tags, R.layout.category_list_item, from, to);
+        
         setListAdapter(simpleAdapter);
+        // 添加addbutton
+
+        
         int size = tags.size();
         if (size > 0) {
             for (int i = 0; i < tags.size(); i++) {

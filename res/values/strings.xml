@@ -13,7 +13,6 @@
         <item>体育</item>
         <item>科技</item>
         <item>财经</item>
-        <item>添加</item>
     </string-array>
     <string-array name="category_descs">
         <item>每日第一时间重要新闻</item>
@@ -21,6 +20,5 @@
         <item>最快速最全面最专业的体育新闻</item>
         <item>IT业界的及时资讯报道</item>
         <item>专业的全球财经热点新闻及评论</item>
-        <item>添加</item>
     </string-array>
 </resources>

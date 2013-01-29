@@ -28,7 +28,7 @@
           android:textSize="12sp" />
   </LinearLayout>
   <TextView android:id="@+id/syncCount"
-  		android:background="@drawable/sync_bg_2"
+  		android:background="@drawable/sync_bg"
         android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_margin="5dp"
