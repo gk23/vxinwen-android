@@ -7,6 +7,7 @@ import java.util.Map;
 
 import net.vxinwen.R;
 import net.vxinwen.bean.Category;
+import net.vxinwen.bean.Entity;
 import net.vxinwen.bean.News;
 import net.vxinwen.db.dao.CategoryDao;
 import net.vxinwen.db.dao.NewsDao;
@@ -191,15 +192,16 @@ public class MainActivity extends ListActivity {
             Log.d(SyncNewsTask.class.getName(), "["+tagName+"] Coming in method [doInBackground], the lastId is ["+lastNewsId+"]");
             long s  = System.currentTimeMillis();
             SyncNewsService service = new SyncNewsService();
-            Map<String, List<News>> newsMap = service.getNews(new long[] { lastNewsId },
+            Map<String, List<Entity>> newsMap = service.getNews(new long[] { lastNewsId },
                     new String[] { tagName });
             // 存入数据库
             NewsDao newsDao = new NewsDao();
             // 返回的只有一个tag对应的List<News>
-            List<News> newses = newsMap.get(tagName);
+            List<Entity> newses = newsMap.get(tagName);
             long e = System.currentTimeMillis();
             Log.d(SyncNewsTask.class.getName(), "["+tagName+"] Fetching news from server costs "+(e-s)+"ms, newses size is "+(newses==null?0:newses.size()));
             s  = System.currentTimeMillis();
+            // TODO add inserting service. newsDao and JokeDao
             boolean isInserted = newsDao.insertBatch(context, newses);
             e = System.currentTimeMillis();
             Log.d(SyncNewsTask.class.getName(), "["+tagName+"] Inserting news into DB costs "+(e-s)+"ms, isInserted is "+isInserted);

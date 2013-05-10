@@ -48,10 +48,10 @@ public class NewsDao {
                 do {
                     news = new News();
                     news.setId(cursor.getLong(cursor.getColumnIndex("id")));
-                    news.setContent(cursor.getString(cursor.getColumnIndex("content")));
+                    news.setBody(cursor.getString(cursor.getColumnIndex("content")));
                     news.setTitle(cursor.getString(cursor.getColumnIndex("title")));
                     news.setSummary(cursor.getString(cursor.getColumnIndex("summary")));
-                    news.setImageAddress(cursor.getString(cursor.getColumnIndex("image_address")));
+                    news.setImage(cursor.getString(cursor.getColumnIndex("image_address")));
                     news.setUrl(cursor.getString(cursor.getColumnIndex("url")));
                     Timestamp publishTime = TimestampUtil.stringToTimeStamp(cursor.getString(cursor
                             .getColumnIndex("publish_time")));
@@ -119,7 +119,7 @@ public class NewsDao {
             newsArray[i][0] = (Long)news.getId();
             newsArray[i][1] = news.getTitle();
             newsArray[i][2] = news.getSummary();
-            newsArray[i][3] = news.getImageAddress();
+            newsArray[i][3] = news.getImage();
             newsArray[i][4] = news.getUrl();
             newsArray[i][5] = TimestampUtil.timeStampToString(news.getPublishTime());
             newsArray[i][6] = news.getCategory();

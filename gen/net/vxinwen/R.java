@@ -205,8 +205,9 @@ containing a value of this type.
         public static final int onMove=0x7f050006;
         public static final int slideLeft=0x7f050004;
         public static final int slideRight=0x7f050003;
-        public static final int splash_bg=0x7f050012;
+        public static final int splash_bg=0x7f050013;
         public static final int syncCount=0x7f05000c;
+        public static final int wvOriNews=0x7f050012;
     }
     public static final class layout {
         public static final int add_button=0x7f030000;
@@ -218,7 +219,8 @@ containing a value of this type.
         public static final int news_summary=0x7f030006;
         public static final int right_in=0x7f030007;
         public static final int right_out=0x7f030008;
-        public static final int splash=0x7f030009;
+        public static final int show_ori_news=0x7f030009;
+        public static final int splash=0x7f03000a;
     }
     public static final class string {
         public static final int app_name=0x7f060002;

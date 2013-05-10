@@ -2,7 +2,6 @@
 <resources>
     <!-- 程序的版本号 -->
     <string name="version">0.1-beta</string>
-
     <!-- 数据库版本号，为正整数，每次发布前如果数据结构有更新则将此值加1，系统会调用onUpgrade方法 -->
     <string name="sql_version">1</string>
     <string name="app_name">微新闻</string>
@@ -12,13 +11,13 @@
         <item>娱乐</item>
         <item>体育</item>
         <item>科技</item>
-        <item>财经</item>
+        <item>段子</item>
     </string-array>
     <string-array name="category_descs">
         <item>每日第一时间重要新闻</item>
         <item>最新的明星绯闻八卦资讯</item>
         <item>最快速最全面最专业的体育新闻</item>
         <item>IT业界的及时资讯报道</item>
-        <item>专业的全球财经热点新闻及评论</item>
+        <item>搞笑段子、冷笑话大杂烩</item>
     </string-array>
 </resources>

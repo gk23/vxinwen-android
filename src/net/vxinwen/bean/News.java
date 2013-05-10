@@ -2,77 +2,35 @@ package net.vxinwen.bean;
 
 import java.sql.Timestamp;
 
-public class News {
-    private long id;
-    private String category;
-    private String imageAddress;
-    private String title;
-    private String content;
-    private String summary;
-    private Timestamp publishTime;
-    private String url;
+public class News extends Entity{
+	private String[][] sections;
+    /**
+     * 暂时没用，以后用于用户定制新闻，组件替代category字段
+     */
+    private String tags;
+    private Timestamp modifyTime;
 
-    public String getCategory() {
-        return category;
-    }
+	public Timestamp getModifyTime() {
+		return modifyTime;
+	}
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
+	public void setModifyTime(Timestamp modifyTime) {
+		this.modifyTime = modifyTime;
+	}
 
-    public String getUrl() {
-        return url;
-    }
+	public String getTags() {
+		return tags;
+	}
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+	public void setTags(String tags) {
+		this.tags = tags;
+	}
 
-    public Timestamp getPublishTime() {
-        return publishTime;
-    }
+	public void setSections(String[][] sections) {
+		this.sections = sections;
+	}
 
-    public void setPublishTime(Timestamp publishTime) {
-        this.publishTime = publishTime;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getImageAddress() {
-        return imageAddress;
-    }
-
-    public void setImageAddress(String imageAddress) {
-        this.imageAddress = imageAddress;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getSummary() {
-        return summary;
-    }
-
-    public void setSummary(String summary) {
-        this.summary = summary;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
+	public String[][] getSections() {
+		return sections;
+	}
 }
