@@ -21,9 +21,10 @@ public class NewsDao {
     private static String MAX_RESULT_COUNT="30"; 
     /**
      * 待插入的字段和顺序，顺序如果修改，则toNewsArray方法也需要相应修改
+     * TODO body格式有换行，单引号，逗号等导致insert操作失败，需要先预处理。
      */
-    private final static String[] COLUMNS_INSERTED = new String[] {"id","title", "summary",
-            "image_address", "url", "publish_time", "category"};
+    private final static String[] COLUMNS_INSERTED = new String[] {"id","title","summary",
+            "image_address", "url", "publish_time", "category","source"};
     private final static int COLUMN_INSERTED_COUNT = COLUMNS_INSERTED.length;
     
     /**
@@ -48,11 +49,12 @@ public class NewsDao {
                 do {
                     news = new News();
                     news.setId(cursor.getLong(cursor.getColumnIndex("id")));
-                    news.setBody(cursor.getString(cursor.getColumnIndex("content")));
+                    news.setBody(cursor.getString(cursor.getColumnIndex("body")));
                     news.setTitle(cursor.getString(cursor.getColumnIndex("title")));
                     news.setSummary(cursor.getString(cursor.getColumnIndex("summary")));
                     news.setImage(cursor.getString(cursor.getColumnIndex("image_address")));
                     news.setUrl(cursor.getString(cursor.getColumnIndex("url")));
+                    news.setSource(cursor.getString(cursor.getColumnIndex("source")));
                     Timestamp publishTime = TimestampUtil.stringToTimeStamp(cursor.getString(cursor
                             .getColumnIndex("publish_time")));
                     news.setPublishTime(publishTime);
@@ -123,6 +125,7 @@ public class NewsDao {
             newsArray[i][4] = news.getUrl();
             newsArray[i][5] = TimestampUtil.timeStampToString(news.getPublishTime());
             newsArray[i][6] = news.getCategory();
+            newsArray[i][7] = news.getSource();
         }
         return newsArray;
     }

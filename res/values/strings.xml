@@ -3,7 +3,7 @@
     <!-- 程序的版本号 -->
     <string name="version">0.1-beta</string>
     <!-- 数据库版本号，为正整数，每次发布前如果数据结构有更新则将此值加1，系统会调用onUpgrade方法 -->
-    <string name="sql_version">1</string>
+    <string name="sql_version">2</string>
     <string name="app_name">微新闻</string>
     <string name="sync_msg">正在同步...</string>
     <string-array name="category_names">

@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import net.vxinwen.bean.Entity;
+import net.vxinwen.bean.News;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -20,18 +20,18 @@ public class JsonUtil {
      * @param jsonString
      * @return
      */
-    public static Map<String, List<Entity>> jsonToNews(String jsonString) {
-        Map<String, List<Entity>> newses = new HashMap<String, List<Entity>>();
+    public static Map<String, List<News>> jsonToNews(String jsonString) {
+        Map<String, List<News>> newses = new HashMap<String, List<News>>();
         if (jsonString != null && jsonString.trim().length() > 0) {
             JSONObject result = (JSONObject) JSONValue.parse(jsonString);
             Iterator it = result.keySet().iterator();
             while (it.hasNext()) {
                 String category = (String) it.next();
                 JSONArray newsArray = (JSONArray) result.get(category);
-                List<Entity> newsList = new ArrayList<Entity>(newsArray.size());
+                List<News> newsList = new ArrayList<News>(newsArray.size());
                 for (int i = 0; i < newsArray.size(); i++) {
                     JSONObject newsJson = (JSONObject) newsArray.get(i);
-                    Entity entity = new Entity();
+                    News entity = new News();
                     Log.d(JsonUtil.class.getName(), "the news json is "+newsJson.toJSONString());
                     entity.setId((Long) newsJson.get("id"));
                     Object title = newsJson.get("title");

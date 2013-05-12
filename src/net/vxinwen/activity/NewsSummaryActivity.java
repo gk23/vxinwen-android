@@ -3,7 +3,6 @@ package net.vxinwen.activity;
 import java.util.List;
 
 import net.vxinwen.R;
-import net.vxinwen.bean.Entity;
 import net.vxinwen.bean.News;
 import net.vxinwen.db.dao.NewsDao;
 import net.vxinwen.service.SyncNewsService;
@@ -42,7 +41,7 @@ public class NewsSummaryActivity extends Activity implements OnGestureListener {
         this.flipper = new ViewFlipper(this);
         this.detector = new GestureDetector(this);
         // 按页显示所有内容
-        List<Entity> newses = getNews();
+        List<News> newses = getNews();
         Log.d(NewsSummaryActivity.class.getName(), "the newses size is ["
                 + (newses == null ? 0 : newses.size()) + "]");
         View layout;
@@ -50,14 +49,14 @@ public class NewsSummaryActivity extends Activity implements OnGestureListener {
             NewsSummaryActivity.this.finish();
             return;
         }
-        for (Entity news : newses) {
+        for (News news : newses) {
             layout = getNewsLayout(news);
             flipper.addView(layout);
         }
         setContentView(flipper);
     }
 
-    private View getNewsLayout(Entity news) {
+    private View getNewsLayout(News news) {
         // 实例化布局
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         View layout = inflater.inflate(R.layout.news_summary, null);
@@ -98,7 +97,7 @@ public class NewsSummaryActivity extends Activity implements OnGestureListener {
      * 
      * @return 新闻list，如果没有则list.size()==0，list不会为null
      */
-    private List<Entity> getNews() {
+    private List<News> getNews() {
         String category = this.getIntent().getStringExtra("category");
         Log.d(NewsSummaryActivity.class.getName(), "[" + category + "]");
         // 1.首先从数据库中找最新的新闻，
@@ -108,7 +107,7 @@ public class NewsSummaryActivity extends Activity implements OnGestureListener {
         // 数据按照publish_time倒序
         
         // TODO BaseDao.getService
-        List<Entity> newses = dao.getByCategory(this, category);
+        List<News> newses = dao.getByCategory(this, category);
         Log.d(NewsSummaryActivity.class.getName(), "the news size of [" + category + "] is "
                 + newses.size());
         long e = System.currentTimeMillis();
