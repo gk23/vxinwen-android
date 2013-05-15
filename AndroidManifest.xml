@@ -22,6 +22,8 @@
             android:screenOrientation="portrait"></activity>
         <activity android:name=".activity.ShowOriNewsActivity"
             android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.ShowBodyNewsActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

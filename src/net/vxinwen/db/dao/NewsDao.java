@@ -24,7 +24,7 @@ public class NewsDao {
      * TODO body格式有换行，单引号，逗号等导致insert操作失败，需要先预处理。
      */
     private final static String[] COLUMNS_INSERTED = new String[] {"id","title","summary",
-            "image_address", "url", "publish_time", "category","source"};
+            "image_address", "url", "publish_time", "category","source","body"};
     private final static int COLUMN_INSERTED_COUNT = COLUMNS_INSERTED.length;
     
     /**
@@ -126,6 +126,8 @@ public class NewsDao {
             newsArray[i][5] = TimestampUtil.timeStampToString(news.getPublishTime());
             newsArray[i][6] = news.getCategory();
             newsArray[i][7] = news.getSource();
+            String body = news.getBody().replaceAll("'", "##");
+            newsArray[i][8] = body;
         }
         return newsArray;
     }

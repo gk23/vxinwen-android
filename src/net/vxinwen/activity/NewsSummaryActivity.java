@@ -13,6 +13,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.GestureDetector.OnDoubleTapListener;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -27,7 +28,7 @@ import android.widget.ViewFlipper;
  * @author gk23<aoaogk@gmail.com>
  * 
  */
-public class NewsSummaryActivity extends Activity implements OnGestureListener {
+public class NewsSummaryActivity extends Activity implements OnGestureListener,OnDoubleTapListener {
     private ViewFlipper flipper;
     private GestureDetector detector;
     /**
@@ -79,6 +80,7 @@ public class NewsSummaryActivity extends Activity implements OnGestureListener {
 
         // set summary
         TextView summary = (TextView) layout.findViewById(R.id.newsSummary);
+        //summary.setMovementMethod(ScrollingMovementMethod.getInstance());
         summary.setText(news.getSummary());
         // 存储news数据，用于标识当前显示的view是哪一个
         layout.setTag(news);
@@ -204,12 +206,24 @@ public class NewsSummaryActivity extends Activity implements OnGestureListener {
      */
     @Override
     public void onLongPress(MotionEvent e) {
-
+        Log.d(NewsSummaryActivity.class.getName(), "long press.");
     }
+    
 
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-        return false;
+//        offset = offset- distanceX;  
+//        //确保不滑出界  
+//        if(offset>0){  
+//            offset=0;  
+//        }  
+//       else if(offset < (getChildCount()-numColumns)*unitWidth*-1) {  
+//            offset = (getChildCount()-numColumns)*unitWidth*-1;  
+//        }  
+//        //重绘布局  
+//        requestLayout();  
+  
+        return false;  
     }
 
     @Override
@@ -219,6 +233,28 @@ public class NewsSummaryActivity extends Activity implements OnGestureListener {
 
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onDoubleTap(MotionEvent e) {
+        News news = (News)flipper.getCurrentView().getTag();
+        Intent intent = new Intent(NewsSummaryActivity.this,ShowBodyNewsActivity.class);
+        intent.putExtra("title",news.getTitle());
+        intent.putExtra("body", news.getBody());
+        NewsSummaryActivity.this.startActivity(intent);
+        return true;
+    }
+
+    @Override
+    public boolean onDoubleTapEvent(MotionEvent e) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean onSingleTapConfirmed(MotionEvent e) {
+        // TODO Auto-generated method stub
         return false;
     }
 }

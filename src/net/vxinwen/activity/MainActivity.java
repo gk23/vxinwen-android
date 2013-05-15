@@ -79,11 +79,9 @@ public class MainActivity extends ListActivity {
                 intent = new Intent(MainActivity.this, AddTagActivity.class);
             }else{
                 intent = new Intent(MainActivity.this, NewsSummaryActivity.class);
-                Map<String, Object> item = tags.get(position);
-                String name = (String)item.get("name");
-                
+                Map<String, Object> item = tags.get(position);                
                 // 传递
-                intent.putExtra("category", (String) item.get("name"));
+                intent.putExtra("category", (String)item.get("name"));
                 
             }
             MainActivity.this.startActivity(intent);

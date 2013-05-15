@@ -8,19 +8,18 @@
         android:textColor="#FFFFFF" android:textStyle="bold"
         android:gravity="left|bottom" android:padding="8dp">
     </TextView>
-    <LinearLayout android:id="@+id/contentLayout"
-        android:layout_width="fill_parent" android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView android:id="@+id/newsSource"
-            android:layout_width="fill_parent" android:layout_height="wrap_content"
-            android:padding="8dp" android:text="TextView"
-            android:textSize="14sp" android:textColor="#808080">
 
-        </TextView>
-        <TextView android:id="@+id/newsSummary"
-            android:layout_width="fill_parent" android:layout_height="wrap_content"
-            android:text="TextView" android:textSize="18sp"
-            android:textColor="#000000" android:padding="8dp">
-        </TextView>
-    </LinearLayout>
+    <TextView android:id="@+id/newsSource"
+        android:layout_width="fill_parent" android:layout_height="wrap_content"
+        android:padding="8dp" android:text="TextView" android:textSize="14sp"
+        android:textColor="#808080">
+
+    </TextView>
+    <TextView android:id="@+id/newsSummary"
+        android:layout_width="fill_parent" android:layout_height="wrap_content"
+        android:text="TextView" android:textSize="18sp"
+        android:textColor="#000000" android:padding="8dp"
+        android:scrollbars="vertical" android:singleLine="false"
+        android:maxLines="150">
+    </TextView>
 </LinearLayout>
