@@ -1,5 +1,8 @@
 package net.vxinwen.activity;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 import net.vxinwen.R;
@@ -8,6 +11,8 @@ import net.vxinwen.db.dao.NewsDao;
 import net.vxinwen.service.SyncNewsService;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -19,6 +24,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
@@ -78,6 +84,23 @@ public class NewsSummaryActivity extends Activity implements OnGestureListener,O
         String sourceText = news.getSource()+"  " + summaryWordCount + "字   " + news.getPublishTime();
         source.setText(sourceText);
 
+        if(news.getImage()!=null){
+            ImageView image = (ImageView) layout.findViewById(R.id.newsImage);
+            //image.setImageURI(news.getImage());
+            URL picUrl;
+            try {
+                picUrl = new URL(news.getImage());
+                Bitmap pngBM = BitmapFactory.decodeStream(picUrl.openStream());   
+                image.setImageBitmap(pngBM);  
+            } catch (MalformedURLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }  
+  
+        }
         // set summary
         TextView summary = (TextView) layout.findViewById(R.id.newsSummary);
         //summary.setMovementMethod(ScrollingMovementMethod.getInstance());

@@ -192,24 +192,25 @@ containing a value of this type.
         public static final int cat_name=0x7f05000a;
         public static final int clickRemove=0x7f050000;
         public static final int click_remove=0x7f050009;
-        public static final int contentLayout1=0x7f050011;
+        public static final int contentLayout1=0x7f050012;
         public static final int drag_handle=0x7f050008;
         public static final int flingLeft=0x7f050002;
         public static final int flingRight=0x7f050001;
-        public static final int newsBody1=0x7f050013;
+        public static final int newsBody1=0x7f050014;
         public static final int newsDetailLayout=0x7f05000d;
+        public static final int newsImage=0x7f050010;
         public static final int newsSource=0x7f05000f;
-        public static final int newsSummary=0x7f050010;
+        public static final int newsSummary=0x7f050011;
         public static final int newsTitle=0x7f05000e;
-        public static final int newsTitle1=0x7f050012;
+        public static final int newsTitle1=0x7f050013;
         public static final int onDown=0x7f050005;
         public static final int onLongPress=0x7f050007;
         public static final int onMove=0x7f050006;
         public static final int slideLeft=0x7f050004;
         public static final int slideRight=0x7f050003;
-        public static final int splash_bg=0x7f050015;
+        public static final int splash_bg=0x7f050016;
         public static final int syncCount=0x7f05000c;
-        public static final int wvOriNews=0x7f050014;
+        public static final int wvOriNews=0x7f050015;
     }
     public static final class layout {
         public static final int add_button=0x7f030000;

@@ -15,6 +15,10 @@
         android:textColor="#808080">
 
     </TextView>
+    <ImageView android:id="@+id/newsImage"
+        android:layout_width="fill_parent" android:layout_height="wrap_content"
+        android:padding="8dp">
+    </ImageView>
     <TextView android:id="@+id/newsSummary"
         android:layout_width="fill_parent" android:layout_height="wrap_content"
         android:text="TextView" android:textSize="18sp"
