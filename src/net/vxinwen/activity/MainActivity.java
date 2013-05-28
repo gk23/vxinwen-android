@@ -101,9 +101,10 @@ public class MainActivity extends ListActivity {
         lv.setDragScrollProfile(ssProfile);
         lv.setOnItemClickListener(onItemClick);
 
-        LayoutInflater inflater = this.getLayoutInflater();
-        LinearLayout v = (LinearLayout)inflater.inflate(R.layout.add_button, null);
-        lv.addFooterView(v,null,true);
+        // 去掉"添加'按钮，后期实现功能后再加
+//        LayoutInflater inflater = this.getLayoutInflater();
+//        LinearLayout v = (LinearLayout)inflater.inflate(R.layout.add_button, null);
+//        lv.addFooterView(v,null,true);
         // 从数据库中获得tags内容，赋值给tags变量
         loadTags();
         String[] from = new String[] { "name", "description", "syncCount" };
