@@ -1,31 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:id="@+id/newsDetailLayout"
-    android:layout_width="fill_parent" android:layout_height="fill_parent"
-    android:orientation="vertical" android:background="#FFFFFF"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <TextView android:id="@+id/newsTitle" android:layout_width="fill_parent"
-        android:layout_height="wrap_content" android:textSize="24sp"
-        android:textColor="#FFFFFF" android:textStyle="bold"
-        android:gravity="left|bottom" android:padding="8dp">
-    </TextView>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" 
+    android:fillViewport="true">
+    <!--  android:fillViewport=true 可以保证子LinearLayout的layout_height=fill_parent有效-->
+    
+    <LinearLayout
+        android:id="@+id/newsDetailLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#FFFFFF"
+        android:orientation="vertical" >
 
-    <TextView android:id="@+id/newsSource"
-        android:layout_width="fill_parent" android:layout_height="wrap_content"
-        android:padding="8dp" android:text="TextView" android:textSize="14sp"
-        android:textColor="#808080">
+        <TextView
+            android:id="@+id/newsTitle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left|bottom"
+            android:padding="8dp"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold" >
+        </TextView>
 
-    </TextView>
-    <ImageView android:id="@+id/newsImage"
-        android:layout_width="fill_parent" android:layout_height="wrap_content"
-        android:padding="8dp"
-        >
-    </ImageView>
-    <TextView android:id="@+id/newsSummary"
-        android:layout_width="fill_parent" android:layout_height="wrap_content"
-        android:text="TextView" android:textSize="18sp"
-        android:textColor="#000000" android:padding="8dp"
-        android:scrollbars="vertical" android:singleLine="false"
-        android:maxLines="150"
-        android:lineSpacingExtra="4dp">
-    </TextView>
-</LinearLayout>
+        <TextView
+            android:id="@+id/newsSource"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="TextView"
+            android:textColor="#808080"
+            android:textSize="14sp" >
+        </TextView>
+
+        <ImageView
+            android:id="@+id/newsImage"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp" >
+        </ImageView>
+
+        <TextView
+            android:id="@+id/newsSummary"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:lineSpacingExtra="4dp"
+            android:maxLines="150"
+            android:padding="8dp"
+            android:scrollbars="vertical"
+            android:singleLine="false"
+            android:text="TextView"
+            android:textColor="#000000"
+            android:textSize="18sp" >
+        </TextView>
+    </LinearLayout>
+
+</ScrollView>

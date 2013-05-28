@@ -206,6 +206,14 @@ public class NewsSummaryActivity extends Activity implements OnGestureListener, 
     }
 
     /**
+     * 加上此方法可以实现scrollview可用，同时可以区分对图片的fling和click操作
+     */
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev){
+        super.dispatchTouchEvent(ev);
+        return detector.onTouchEvent(ev);
+    }
+    /**
      * TODO 1. 首页从左向右拨，激活同步最新信息（从互联网上获得，存入数据库，同时显示） 2.
      * 尾页从右向左拨，查看更多（从数据库中读取下30条，如果没有则到服务器中获取，存入数据库同时显示）
      * 
@@ -250,18 +258,18 @@ public class NewsSummaryActivity extends Activity implements OnGestureListener, 
 
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-        // offset = offset- distanceX;
-        // //确保不滑出界
-        // if(offset>0){
-        // offset=0;
-        // }
-        // else if(offset < (getChildCount()-numColumns)*unitWidth*-1) {
-        // offset = (getChildCount()-numColumns)*unitWidth*-1;
-        // }
-        // //重绘布局
-        // requestLayout();
-
-        return false;
+//         offset = offset- distanceX;
+//         //确保不滑出界
+//         if(offset>0){
+//         offset=0;
+//         }
+//         else if(offset < (getChildCount()-numColumns)*unitWidth*-1) {
+//         offset = (getChildCount()-numColumns)*unitWidth*-1;
+//         }
+//         //重绘布局
+//         requestLayout();
+        
+        return true;
     }
 
     @Override
