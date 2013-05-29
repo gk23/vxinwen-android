@@ -285,6 +285,7 @@ public class NewsSummaryActivity extends Activity implements OnGestureListener, 
 
     @Override
     public boolean onDoubleTap(MotionEvent e) {
+        Log.d(NewsSummaryActivity.class.getName(),"coming in onDoubleTap method. Action is: "+e.getAction());
         News news = (News) flipper.getCurrentView().getTag();
         Intent intent = new Intent(NewsSummaryActivity.this, ShowBodyNewsActivity.class);
         intent.putExtra("title", news.getTitle());
@@ -297,7 +298,7 @@ public class NewsSummaryActivity extends Activity implements OnGestureListener, 
 
     @Override
     public boolean onDoubleTapEvent(MotionEvent e) {
-        // TODO Auto-generated method stub
+        Log.d(NewsSummaryActivity.class.getName(),"coming in onDoubleTapEvent method.Action is: "+e.getAction());
         return false;
     }
 

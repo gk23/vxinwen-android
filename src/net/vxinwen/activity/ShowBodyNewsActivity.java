@@ -5,8 +5,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.GestureDetector.OnDoubleTapListener;
+import android.view.GestureDetector;
+import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnTouchListener;
 import android.webkit.WebView;
 import android.widget.TextView;
 
@@ -17,16 +20,27 @@ import android.widget.TextView;
  * @author gk23<aoaogk@gmail.com>
  * 
  */
-public class ShowBodyNewsActivity extends Activity implements OnDoubleTapListener{
+public class ShowBodyNewsActivity extends Activity implements OnTouchListener {
+    
+    private GestureDetector detector ;
+    
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev){
+        super.dispatchTouchEvent(ev);   
+        return detector.onTouchEvent(ev); 
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        detector= new GestureDetector(this,new MySimpleGesture());
         Intent intent = this.getIntent();
         String title = intent.getStringExtra("title");
         String source = intent.getStringExtra("source");
         String publishTime = intent.getStringExtra("publishTime");
         String body=intent.getStringExtra("body");
         setContentView(R.layout.show_body_news);  
+        
         TextView titleView = (TextView)this.findViewById(R.id.newsTitle1);
         Log.d(ShowBodyNewsActivity.class.getName(),"the titleView is "+titleView);
         titleView.setText(title);
@@ -51,21 +65,43 @@ public class ShowBodyNewsActivity extends Activity implements OnDoubleTapListene
         +"</html>";
     }
 
-    @Override
-    public boolean onDoubleTap(MotionEvent e) {
-        finish();
-        return true;
-    }
+//    @Override
+//    public boolean onDoubleTap(MotionEvent e) {
+//        Log.d(ShowBodyNewsActivity.class.getName(),"coming in onDoubleTap method.");
+//        finish();
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onDoubleTapEvent(MotionEvent e) {
+//        Log.d(ShowBodyNewsActivity.class.getName(),"coming in onDoubleTapEvent method.");
+//        //finish();
+//        return false;
+//    }
+//
+//    @Override
+//    public boolean onSingleTapConfirmed(MotionEvent e) {
+//        System.out.println("single tap confirmed.");
+//        return false;
+//    }
 
+    
     @Override
-    public boolean onDoubleTapEvent(MotionEvent e) {
-        finish();
-        return true;
+    public boolean onTouch(View arg0, MotionEvent ev) {
+        return detector.onTouchEvent(ev);
     }
-
-    @Override
-    public boolean onSingleTapConfirmed(MotionEvent e) {
-        System.out.println("single tap confirmed.");
-        return false;
+    
+    private class MySimpleGesture extends SimpleOnGestureListener{
+        
+        public boolean onDoubleTap(MotionEvent ev){
+            Log.d(ShowBodyNewsActivity.class.getName(),"coming in onDoubleTap method.");
+            finish();
+            return false;
+        }
+        
+//        public boolean onDoubleTapEvent(MotionEvent ev){
+//            Log.d(ShowBodyNewsActivity.class.getName(),"coming in onDoubleTapEvent method.");
+//            return super.onDoubleTapEvent(ev);
+//        }
     }
 }
